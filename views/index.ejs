@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pergamentti</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- slideshow container -->
+    <div id="ssContainer">
+      <!-- loop thru the list of media files and check the index,
+      because the first needs to be styled specifically to correct the animation -->
+      <% mediaFiles.forEach(function(mediaFile, index) { %>
+      <div class="mediaContainer" style="<%= index === 0 ? 'left: 0;' : '' %>">
+        <!-- if media is image -->
+        <% if (mediaFile.type === 'image') { %>
+        <img src="<%= mediaFile.path %>" alt="media" />
+        <!-- if media is video -->
+        <% } else if (mediaFile.type === 'video') { %>
+        <video
+          class="ssVideo"
+          src="<%= mediaFile.path %>"
+          autoplay
+          loop
+          muted
+        ></video>
+        <% } %>
+      </div>
+      <% }); %>
+    </div>
+
+    <script src="jquery/jquery-3.6.3.min.js"></script>
+    <script src="jquery-ui-1.13.2.custom/jquery-ui.js"></script>
+    <script src="anim.js"></script>
+    <script src="api.js"></script>
+  </body>
+</html>
