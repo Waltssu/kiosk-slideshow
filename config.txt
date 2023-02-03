@@ -1,0 +1,43 @@
+modify config at
+
+/etc/nginx/sites-available/*website*
+
+server {
+    listen 80;
+    server_name your-domain.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+create symbolic link
+
+sudo ln -s /etc/nginx/sites-available/your-website /etc/nginx/sites-enabled/
+
+// node.js config //
+
+config file
+/etc/systemd/system/your-server.service
+
+[Unit]
+Description="Node.js Server"
+
+[Service]
+ExecStart=/usr/bin/node /path/to/your/server.js
+WorkingDirectory=/path/to/your/server/directory
+Restart=always
+User=your-user-name
+
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl daemon-reload
+sudo systemctl enable your-server.service
+sudo systemctl start your-server.service
+sudo systemctl status your-server.service
