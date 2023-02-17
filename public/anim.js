@@ -3,12 +3,16 @@ var container = document.getElementById("ssContainer"); // slideshow container
 var selectedMedia = 0; // selected image index
 var allMedia = container.querySelectorAll(".mediaContainer"); // all media
 var videos = document.getElementsByTagName("video"); // all video elements
-var intervalId; // ID for interval
+var arrowLeft = document.getElementById("arrowLeft"); // left arrow
+var arrowRight = document.getElementById("arrowRight"); // right arrow
+var intervalIDs = []; // array of interval IDs
+var animDuration = 30000;
+
 
 // media change function, can be called by timer
 function changeMedia() {
   // animate old picture to slide out from the frame
-  $(allMedia[selectedMedia]).animate({ left: "-100%" }, 1000);
+  $(allMedia[selectedMedia]).animate({ left: "-100%" }, 250);
 
   // if to prevent going "over" the list of imgs
   if (selectedMedia == allMedia.length - 1) {
@@ -17,83 +21,153 @@ function changeMedia() {
     selectedMedia++;
   }
 
+  // select next media child element from mediacontainer
+  // to check if its video or not
+  const nextElement = allMedia[selectedMedia].children[0];
+
+  if (nextElement.tagName === "VIDEO") {
+    // get video duration and multiply to get amout of milliseconds
+    let videoDuration = (nextElement.duration * 1000) - 800;
+    // stop slideshow and reset video playback to beginning of video
+    clearInterval(intervalID);
+    nextElement.pause();
+    nextElement.currentTime = 0;
+    nextElement.play();
+    // timeout for the duration of the video
+    setTimeout(function () {
+      // reset interval to start over
+      callMediaChange();
+      // call for the media change function
+      changeMedia();
+    }, videoDuration);
+  }
+
+
   // reset all positions to right to reset animation
   allMedia.forEach((media) => {
     media.style.left = "100%";
   });
 
   // animate new picture to slide into the frame
-  $(allMedia[selectedMedia]).animate({ left: "0%" }, 1000);
+  $(allMedia[selectedMedia]).animate({ left: "0%" }, 250);
 }
 
-// start timer, calls changeMedia
-function startTimer() {
-  intervalId = setInterval(() => {
-    // call function every 10 seconds
-    changeMedia();
-    checkDuration(allMedia[selectedMedia]);
-  }, 15000);
-}
-
-// stop timer
-function stopTimer() {
-  clearInterval(intervalId);
-}
-
-// continue timer (stop and start)
-function continueTimer() {
-  stopTimer();
-  startTimer();
-}
-
-// pause slideshow for the duration of the video
-function checkDuration(media) {
-  // select correct child node (at index 3)
-  let child = media.childNodes[3];
-  // check if media is video
-  if (child.className === "ssVideo") {
-    // set video duration to milliseconds and subtract 850ms from total length
-    // this is because the transition takes 1 seconds so picture change will be smoother
-    let videoDur = child.duration * 1000 - 1000;
-
-    console.log("video detected, pausing for:", videoDur);
-    // pause video to reset playtime to beginning
-    child.pause();
-
-    // set current time to beginning (zero)
-    child.currentTime = 0;
-
-    // play video
-    child.play();
-
-    // clear interval to pause slideshow
-    stopTimer();
-
-    // timeout for the length of the video
-    setTimeout(() => {
-      // call media change function at the end of the timeout
-      changeMedia();
-      // continue interval
-      continueTimer();
-    }, videoDur);
-
-    // else if media includes longer class (important info for ex.)
-  } else if (child.className === "longer") {
-    console.log("longer detected, pause for 35s");
-    // stop slideshow
-    stopTimer();
-    // timeout
-    setTimeout(() => {
-      // change media after 35 seconds
-      changeMedia();
-      // continue interval
-      continueTimer();
-    }, 35000);
+// function to clear all intervals to prevent them stacking
+function clearAllIntervals() {
+  for (var i = 0; i < intervalIDs.length; i++) {
+    clearInterval(intervalIDs[i]);
   }
+  intervalIDs = [];
+  
+  // clear all timeouts using an empty function trick
+  var id = window.setTimeout(function() {}, 0);
+  while (id--) {
+    window.clearTimeout(id);
+  }
+
+};
+
+// Interval function to call media change function
+function callMediaChange() {
+  clearAllIntervals();
+  intervalID = setInterval(changeMedia, 30000);
 }
 
-// start slideshow on window load
-window.addEventListener("load", startTimer);
+arrowLeft.addEventListener("click", function () {
+  // Clear the interval to prevent multiple intervals running at once
+  clearAllIntervals();
+
+  // animate old picture to slide out from the frame
+  $(allMedia[selectedMedia]).animate({ left: "100%" }, 250);
+
+  // if to prevent going "under" the list of imgs
+  if (selectedMedia == 0) {
+    selectedMedia = allMedia.length - 1;
+  } else {
+    selectedMedia--;
+  }
+
+  // select previous media child element from mediacontainer
+  // to check if its video or not
+  const prevElement = allMedia[selectedMedia].children[0];
+
+  if (prevElement.tagName === "VIDEO") {
+    // get video duration and multiply to get amout of milliseconds
+    let videoDuration = (prevElement.duration * 1000) - 800;
+    // stop slideshow and reset video playback to beginning of video
+    prevElement.pause();
+    prevElement.currentTime = 0;
+    prevElement.play();
+    // timeout for the duration of the video
+    setTimeout(function () {
+      // reset interval to start over
+      callMediaChange();
+      // call for the media change function
+      changeMedia();
+    }, videoDuration);
+  }
+
+  // reset all positions to left to reset animation
+  allMedia.forEach((media) => {
+    media.style.left = "-100%";
+  });
+
+  // animate new picture to slide into the frame
+  $(allMedia[selectedMedia]).animate({ left: "0%" }, 250);
+
+  // reset interval to start over
+  callMediaChange();
+});
+
+arrowRight.addEventListener("click", function () {
+  // Clear the interval to prevent multiple intervals running at once
+  clearAllIntervals();
+
+  // animate old picture to slide out from the frame
+  $(allMedia[selectedMedia]).animate({ left: "-100%" }, 250);
+
+  // if to prevent going "over" the list of imgs
+  if (selectedMedia == allMedia.length - 1) {
+    selectedMedia = 0;
+  } else {
+    selectedMedia++;
+  }
+
+  // select next media child element from mediacontainer
+  // to check if its video or not
+  const nextElement = allMedia[selectedMedia].children[0];
+
+  if (nextElement.tagName === "VIDEO") {
+    // get video duration and multiply to get amout of milliseconds
+    let videoDuration = (nextElement.duration * 1000) - 800;
+    // stop slideshow and reset video playback to beginning of video
+    nextElement.pause();
+    nextElement.currentTime = 0;
+    nextElement.play();
+    // timeout for the duration of the video
+    setTimeout(function () {
+      // reset interval to start over
+      callMediaChange();
+      // call for the media change function
+      changeMedia();
+    }, videoDuration);
+  }
+
+  // reset all positions to right to reset animation
+  allMedia.forEach((media) => {
+    media.style.left = "100%";
+  });
+
+  // animate new picture to slide into the frame
+  $(allMedia[selectedMedia]).animate({ left: "0%" }, 250);
+
+  // reset interval to start over
+  callMediaChange();
+});
+
+
+
+window.addEventListener("load", callMediaChange);
 
 // disable text selection to prevent accidental "blue screen"
 document.body.style.userSelect = "none";
