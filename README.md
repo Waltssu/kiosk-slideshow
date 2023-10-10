@@ -22,6 +22,14 @@ A simple Node.js application that serves a random slideshow of media files (imag
 
 #### Installation
 
+### Dependencies
+
+- [Express](https://expressjs.com/): A minimal and flexible Node.js web application framework.
+- [EJS](https://ejs.co/): Embedded JavaScript templating.
+- [Body-parser](https://github.com/expressjs/body-parser): Node.js body parsing middleware.
+- [FS](https://nodejs.org/api/fs.html): File system module for Node.js.
+- [Path](https://nodejs.org/api/path.html): Path module for Node.js.
+
 1. Clone the repository:
 
 ```
@@ -57,18 +65,4 @@ The application will be running at [http://localhost:3000](http://localhost:3000
 - `api.js`: JavaScript code snippet that fetches media files from the API and renders them in HTML.
 - `views/index.ejs`: EJS template that renders the media files as an HTML page.
 
-### Dependencies
 
-- [Express](https://expressjs.com/): A minimal and flexible Node.js web application framework.
-- [EJS](https://ejs.co/): Embedded JavaScript templating.
-- [Body-parser](https://github.com/expressjs/body-parser): Node.js body parsing middleware.
-- [FS](https://nodejs.org/api/fs.html): File system module for Node.js.
-- [Path](https://nodejs.org/api/path.html): Path module for Node.js.
-
-### Contributing
-
-Please feel free to submit issues or pull requests to improve the application.
-
-### License
-
-This project is open-source and licensed under the MIT License. See the `LICENSE` file for details.
