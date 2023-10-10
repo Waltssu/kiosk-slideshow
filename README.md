@@ -1,34 +1,32 @@
-## Kiosk slideshow
+### Kiosk slideshow
 
 A simple Node.js application that serves a random slideshow of media files (images and videos) from a media folder.
 
-### Features
+#### Features
 
 - Serve images and videos in a random order from the `media` folder.
 - Automatically update the media array when new media files are added to the `media` folder.
 - Animate transitions between media files.
 - Handle video duration for automatic transitions.
 
-### Planned features
+#### Planned features
 
 - Arrow buttons for manual navigation through the slideshow.
 - Marking specific media files for importance to show them longer.
-
-### Getting Started
 
 #### Prerequisites
 
 - [Node.js](https://nodejs.org/en/download/) (version 14.x or higher)
 
-#### Installation
-
-### Dependencies
+#### Dependencies
 
 - [Express](https://expressjs.com/): A minimal and flexible Node.js web application framework.
 - [EJS](https://ejs.co/): Embedded JavaScript templating.
 - [Body-parser](https://github.com/expressjs/body-parser): Node.js body parsing middleware.
 - [FS](https://nodejs.org/api/fs.html): File system module for Node.js.
 - [Path](https://nodejs.org/api/path.html): Path module for Node.js.
+
+#### Installation
 
 1. Clone the repository:
 
