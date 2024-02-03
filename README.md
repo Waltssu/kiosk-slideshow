@@ -2,6 +2,13 @@
 
 A simple Node.js application that serves a random slideshow of media files (images and videos) from a media folder.
 
+<video width="320" height="240" controls>
+  <source src="https://github.com/Waltssu/kiosk-slideshow/blob/main/media/example.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+---
+
 #### Features
 
 - Serve images and videos in a random order from the `media` folder.
