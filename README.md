@@ -40,7 +40,7 @@ git clone https://github.com/Waltssu/kiosk-slideshow.git
 cd kiosk-slideshow
 ```
 
-3. Install npm:
+3. Install:
 
 ```
 npm install
