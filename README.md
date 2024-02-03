@@ -1,4 +1,4 @@
-### Kiosk slideshow
+<h2 align="center">Kiosk Slideshow</h2>
 
 A simple Node.js application that serves a random slideshow of media files (images and videos) from a media folder.
 
