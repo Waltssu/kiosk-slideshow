@@ -4,6 +4,8 @@ import tkinter as tk
 import os
 from tkinter import filedialog
 
+# THIS IS A WORK IN PROGRESS APPLICATION! USE AT YOUR OWN RISK!!
+
 class FileManager:
     def __init__(self):
         self.folder_path = "./media"
