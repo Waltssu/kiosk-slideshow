@@ -18,7 +18,7 @@ A simple Node.js application that serves a random slideshow of media files (imag
 
 - [Node.js](https://nodejs.org/en/download/) (version 14.x or higher)
 
-#### Dependencies
+#### Functionality
 
 - [Express](https://expressjs.com/): A minimal and flexible Node.js web application framework.
 - [EJS](https://ejs.co/): Embedded JavaScript templating.
@@ -40,7 +40,7 @@ git clone https://github.com/Waltssu/kiosk-slideshow.git
 cd kiosk-slideshow
 ```
 
-3. Install the dependencies:
+3. Install:
 
 ```
 npm install
